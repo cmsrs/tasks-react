@@ -1,6 +1,6 @@
 import axios from 'axios';
 //import { SERVER_URL, API_SECRET  } from '../config';
-import { PROJECTS_GET_PRODUCTS, PROJECTS_SAVE_PRODUCT, PROJECTS_CHANGE_PRODUCT, PROJECTS_DELETE_PRODUCT, PROJECTS_RES } from './types';
+import { PROJECTS_GET_PROJECTS, PROJECTS_SAVE_PROJECT, PROJECTS_CHANGE_PROJECT, PROJECTS_DELETE_PROJECT, PROJECTS_RES } from './types';
 
 // import { getPrefixUrl } from '../helpers/pages';
 // const prefixUrl = getPrefixUrl(SERVER_URL, API_SECRET);
@@ -14,7 +14,7 @@ export const getProjects = (callback) => async dispatch => {
     );
 
     if(response.data.success){
-      dispatch({ type: PROJECTS_GET_PRODUCTS, payload: response.data.data });
+      dispatch({ type: PROJECTS_GET_PROJECTS, payload: response.data.data });
       callback(response.data.data);
     }else{
       dispatch({ type: PROJECTS_RES, payload: {success: false, message: "Unknown problem with ajax, while get projects 0"} });
@@ -24,6 +24,41 @@ export const getProjects = (callback) => async dispatch => {
      dispatch({ type: PROJECTS_RES, payload: {success: false, message: "Unknown problem with ajax, while get projects"} });
   }
 };
+
+
+export const saveProject = (project, callback) => async  dispatch => {
+
+  const token = localStorage.getItem('token');
+
+  try {
+    let response = null;
+    if( project.id ){
+      response = await axios.put(
+        '/projects/'+project.id+'?token='+token,
+        project
+      );
+    }else{
+      response = await axios.post(
+        '/projects?token='+token,
+        project
+      );
+    }
+
+    if(!response.data.success){
+      dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
+    }else{
+      //const projectId = project.id ? project.id : response.data.data.productId; //update
+      dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      dispatch({ type: PROJECTS_SAVE_PROJECT, payload: project });
+      //callback(productId);
+    }
+
+  } catch (e) {
+     console.log('___probem with ajax______', e);
+     dispatch({ type: PROJECTS_RES, payload: {success: false, message: "Unknown problem with ajax, while save pproject"} });
+  }
+};
+
 
 
 //

@@ -2,10 +2,10 @@ export const AUTH_USER = 'auth_user';
 export const AUTH_ERROR = 'auth_error';
 
 
-export const PROJECTS_GET_PRODUCTS = 'projects_get_projects';
-export const PROJECTS_SAVE_PRODUCT = 'projects_get_project';
-export const PROJECTS_CHANGE_PRODUCT = 'projects_change_project';
-export const PROJECTS_DELETE_PRODUCT = 'projects_delete_project';
+export const PROJECTS_GET_PROJECTS = 'projects_get_projects';
+export const PROJECTS_SAVE_PROJECT = 'projects_get_project';
+export const PROJECTS_CHANGE_PROJECT = 'projects_change_project';
+export const PROJECTS_DELETE_PROJECT = 'projects_delete_project';
 export const PROJECTS_RES = 'projects_res';
 
 
