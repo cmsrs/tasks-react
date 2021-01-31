@@ -1,16 +1,13 @@
 import axios from 'axios';
-//import { SERVER_URL, API_SECRET  } from '../config';
+import { SERVER_URL  } from '../config';
 import { PROJECTS_GET_PROJECTS, PROJECTS_SAVE_PROJECT, PROJECTS_CHANGE_PROJECT, PROJECTS_DELETE_PROJECT, PROJECTS_RES } from './types';
-
-// import { getPrefixUrl } from '../helpers/pages';
-// const prefixUrl = getPrefixUrl(SERVER_URL, API_SECRET);
 
 export const getProjects = (callback) => async dispatch => {
   const token = localStorage.getItem('token');
 
   try {
     const response = await axios.get(
-      '/projects?token='+token
+      SERVER_URL + '/api/projects?token='+token
     );
 
     if(response.data.success){
@@ -34,12 +31,12 @@ export const saveProject = (project, callback) => async  dispatch => {
     let response = null;
     if( project.id ){
       response = await axios.put(
-        '/projects/'+project.id+'?token='+token,
+        SERVER_URL + '/api/projects/'+project.id+'?token='+token,
         project
       );
     }else{
       response = await axios.post(
-        '/projects?token='+token,
+        SERVER_URL + '/api/projects?token='+token,
         project
       );
     }
@@ -47,10 +44,9 @@ export const saveProject = (project, callback) => async  dispatch => {
     if(!response.data.success){
       dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
     }else{
-      //const projectId = project.id ? project.id : response.data.data.productId; //update
-      dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
-      dispatch({ type: PROJECTS_SAVE_PROJECT, payload: project });
-      //callback(productId);
+      //dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      //dispatch({ type: PROJECTS_SAVE_PROJECT, payload: project });
+      callback();
     }
 
   } catch (e) {
@@ -58,6 +54,41 @@ export const saveProject = (project, callback) => async  dispatch => {
      dispatch({ type: PROJECTS_RES, payload: {success: false, message: "Unknown problem with ajax, while save pproject"} });
   }
 };
+
+
+export const saveTask = (task, callback) => async  dispatch => {
+
+  const token = localStorage.getItem('token');
+
+  try {
+    let response = null;
+    if( task.id ){
+      response = await axios.put(
+        SERVER_URL + '/api/tasks/'+task.id+'?token='+token,
+        task
+      );
+    }else{
+      response = await axios.post(
+        SERVER_URL + '/api/tasks?token='+token,
+        task
+      );
+    }
+
+    if(!response.data.success){
+      dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
+    }else{
+      //dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      //dispatch({ type: PROJECTS_SAVE_PROJECT, payload: task });
+      callback();
+    }
+
+  } catch (e) {
+     console.log('___probem with ajax______', e);
+     dispatch({ type: PROJECTS_RES, payload: {success: false, message: "Unknown problem with ajax, while save task"} });
+  }
+};
+
+
 
 
 
