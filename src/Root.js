@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
 
-export default ({ children, initialState = {} }) => {
+const root = ({ children, initialState = {} }) => {
 
   const store = createStore(
     reducers,
@@ -24,3 +24,5 @@ export default ({ children, initialState = {} }) => {
 
   return <Provider store={store}>{children}</Provider>;
 };
+
+export default root;

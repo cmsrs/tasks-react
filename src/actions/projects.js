@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SERVER_URL  } from '../config';
-import { PROJECTS_GET_PROJECTS, PROJECTS_SAVE_PROJECT, PROJECTS_CHANGE_PROJECT, PROJECTS_DELETE_PROJECT, PROJECTS_RES } from './types';
+import { PROJECTS_GET_PROJECTS, PROJECTS_RES } from './types';
 
 export const getProjects = (callback) => async dispatch => {
   const token = localStorage.getItem('token');

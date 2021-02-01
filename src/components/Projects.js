@@ -47,7 +47,6 @@ class Projects extends Component {
     let title = event.target.value;
     const projectid = parseInt(event.target.attributes.getNamedItem('data-projectid').value.replace( /^\D+/g, ''));
 
-    let i = 0;
     let newProj = [];
     for(let obj of this.state.projects){
       let copy = Object.assign({}, obj);
@@ -253,7 +252,7 @@ class Projects extends Component {
           <div className="row mt-3">
           { !!projects.length && projects.map(project =>
             <div  className="mt-3  container" key={'wrap_'+project.id}>
-              <input type="text"  key={'proj_'+project.id} data-projectid={'project_id_'+project.id} placeholder="Project title" name="title" key="title" className="m-2"
+              <input type="text"  key={'proj_'+project.id} data-projectid={'project_id_'+project.id} placeholder="Project title" name="title" className="m-2"
                         onChange={this.handleChangeTitleShow}  value={project.title} />
                         <span onClick={this.editProj.bind(this, project.id)} ><i className="m-1 far fa-edit cursor-pointer"/></span>
                         <span onClick={this.delProj.bind(this, project.id)}><i className="m-1 fas fa-trash cursor-pointer"  aria-hidden="true"/></span>

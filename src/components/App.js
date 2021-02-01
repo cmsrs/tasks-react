@@ -1,10 +1,11 @@
 import React from 'react';
 
-
-export default ({ children }) => {
+const app = ({ children }) => {
   return (
     <div>
       {children}
     </div>
   );
 };
+
+export default app;

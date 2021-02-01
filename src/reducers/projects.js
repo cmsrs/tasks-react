@@ -1,10 +1,10 @@
-import { PROJECTS_GET_PROJECTS, PROJECTS_SAVE_PROJECT, PROJECTS_CHANGE_PROJECT, PROJECTS_DELETE_PROJECT, PROJECTS_RES } from '../actions/types';
+import { PROJECTS_GET_PROJECTS, PROJECTS_RES } from '../actions/types';
 
 const INITIAL_STATE = {
   projects: []
 };
 
-export default function(state = INITIAL_STATE, action) {
+export default function proj(state = INITIAL_STATE, action) {
   switch (action.type) {
     case PROJECTS_RES:
       return { ...state, projects_res: action.payload };
