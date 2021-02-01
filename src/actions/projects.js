@@ -44,7 +44,7 @@ export const saveProject = (project, callback) => async  dispatch => {
     if(!response.data.success){
       dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
     }else{
-      //dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
       //dispatch({ type: PROJECTS_SAVE_PROJECT, payload: project });
       callback();
     }
@@ -77,7 +77,7 @@ export const saveTask = (task, callback) => async  dispatch => {
     if(!response.data.success){
       dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
     }else{
-      //dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
       //dispatch({ type: PROJECTS_SAVE_PROJECT, payload: task });
       callback();
     }
@@ -100,7 +100,7 @@ export const deleteProject = (projectId, callback) =>  async dispatch => {
     if(!response.data.success){
       dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
     }else{
-      //dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
       callback();
     }
 
@@ -122,7 +122,7 @@ export const deleteTask = (taskId, callback) =>  async dispatch => {
     if(!response.data.success){
       dispatch({ type: PROJECTS_RES, payload: {success: false, message: response.data.error} });
     }else{
-      //dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
+      dispatch({ type: PROJECTS_RES, payload: {success: true, message: "Data was saved"} });
       callback();
     }
 

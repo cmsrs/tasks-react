@@ -21,17 +21,17 @@ class Projects extends Component {
 
     this.props.getProjects( (d) => {
       this.setState({projects: d});
-      if(this.state.projects.length && (!this.state.taskProjectId) ){
-        this.setState({taskProjectId : this.state.projects[0].id});
-      }
     });
   }
 
   handleAddProject = () => {
     const title = this.state.projTitle;
-    this.props.saveProject({'title': title} , () => {
+    this.props.saveProject({title: title} , () => {
       this.props.getProjects( (d) => {
         this.setState({projects: d});
+        if(d.length && (!this.state.taskProjectId) ){
+          this.setState({taskProjectId : d[0].id});
+        }
       });
     });
 
@@ -62,9 +62,10 @@ class Projects extends Component {
   handleAddTask = () => {
     const name = this.state.taskName;
     const points = this.state.taskPoints;
-    const projectId = this.state.taskProjectId;
+    const projectId =  this.state.taskProjectId ? this.state.taskProjectId : (this.state.projects ?  this.state.projects[0].id : '');
 
     const task = {name: name, points: points, project_id: projectId};
+    //console.log(task);
     this.props.saveTask(task , () => {
       this.props.getProjects( (d) => {
         this.setState({projects: d});
@@ -136,7 +137,6 @@ class Projects extends Component {
 
   handleChangeProjectId = (event) => {
     let projectId = event.target.value
-    //console.log('proij_id='+projectId);
     this.setState({taskProjectId : projectId});
   }
 
@@ -158,7 +158,6 @@ class Projects extends Component {
   }
 
   delProj = (projectId) => {
-
     this.props.deleteProject(projectId, () => {
       this.props.getProjects( (d) => {
         this.setState({projects: d});
@@ -213,11 +212,11 @@ class Projects extends Component {
         msgHtml = this.props.projectsRes.message;
       }
 
-      msg = <Expire  delay={9000}><div className="alert alert-danger mb-4" role="alert">{msgHtml}</div></Expire>;
+      msg = <Expire delay={9000}><div className="alert alert-danger mb-4" role="alert">{msgHtml}</div></Expire>;
     }
 
     if(this.props.projectsRes && (this.props.projectsRes.success === true) ){
-      msg = <Expire  delay={9000}><div className="alert alert-success  mb-4" role="alert">{this.props.projectsRes.message}</div></Expire>;
+      msg = <Expire delay={90000}><div className="alert alert-success  mb-4" role="alert">{this.props.projectsRes.message}</div></Expire>;
     }
 
     return (
@@ -235,7 +234,7 @@ class Projects extends Component {
             <button className="btn btn-primary mt-2 mb-2"  onClick={this.handleAddProject}>Add project</button>
           </div>
 
-          { projects.length &&
+          { !!projects.length &&
             <div className="row mt-3">
               <input type="text" placeholder="Task name" name="name" key="name" className="mr-2"
                         onChange={this.handleChangeName}  value={this.state.taskName} />
@@ -252,7 +251,7 @@ class Projects extends Component {
           }
 
           <div className="row mt-3">
-          { projects.length && projects.map(project =>
+          { !!projects.length && projects.map(project =>
             <div  className="mt-3  container" key={'wrap_'+project.id}>
               <input type="text"  key={'proj_'+project.id} data-projectid={'project_id_'+project.id} placeholder="Project title" name="title" key="title" className="m-2"
                         onChange={this.handleChangeTitleShow}  value={project.title} />
@@ -282,7 +281,6 @@ class Projects extends Component {
   }
 }
 
-
 function mapStateToProps(state) {
   return {
     projects: state.projects.projects,
@@ -290,4 +288,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(null, actions)(requireAuth(Projects));
+export default connect(mapStateToProps, actions)(requireAuth(Projects));

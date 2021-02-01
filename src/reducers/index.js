@@ -11,6 +11,5 @@ export default combineReducers({
   auth,
   users,
   projects,
-  projects,
   form: formReducer
 });
